@@ -50,3 +50,19 @@
   .side-bottom{padding-top:10px;margin-top:0}.side-bottom p{display:none}.profile{padding-top:9px;margin-top:8px;font-size:11px}.profile small{font-size:10px}
   header{padding:0 16px}main{padding:22px 18px}.stats{grid-template-columns:1fr 1fr}.page-top{flex-wrap:wrap}
 }
+
+/* Final navigation direction: an uncluttered, readable one-column menu. */
+@media(min-width:801px){
+  #sidebar{width:278px;padding-inline:16px}
+  .shell{margin-left:278px}
+  #sidebar nav{grid-template-columns:1fr;flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 4px 10px;margin-right:-4px}
+  #sidebar nav a{min-height:38px;padding:9px 11px;font-size:13px;white-space:normal}
+  #sidebar nav a i{width:18px;flex:0 0 18px;font-size:17px}
+}
+@media(min-width:601px) and (max-width:800px){
+  #sidebar{width:272px;padding-inline:12px}
+  .shell{margin-left:272px}
+  #sidebar nav{grid-template-columns:1fr;flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 4px 8px;margin-right:-4px}
+  #sidebar nav a{min-height:36px;padding:8px 9px;font-size:12px;white-space:normal}
+  #sidebar nav a i{width:16px;flex:0 0 16px;font-size:16px}
+}
