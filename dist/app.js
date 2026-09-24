@@ -143,3 +143,22 @@ invoice=function(id){const job=jobs().find(item=>item.id===id);if(!job)return;mo
 document.addEventListener('click',event=>{const button=event.target.closest('button');if(button?.dataset.whatsappInvoice)openInvoiceWhatsApp(+button.dataset.whatsappInvoice)});
 document.addEventListener('submit',event=>{if(event.target.id!=='whatsapp-invoice-form')return;event.preventDefault();const job=db.jobs.find(item=>item.id===+event.target.dataset.id),number=whatsappDigits(new FormData(event.target).get('whatsapp'));if(!job||!/^\d{10,15}$/.test(number))return toast('Enter a valid WhatsApp mobile number with country code');job.whatsapp=number;try{localStorage.setItem('vucare-demo-v1',JSON.stringify(db))}catch{}$('#dialog').close();openInvoiceWhatsApp(job.id)});
 
+
+// Make every sidebar module open reliably, including the later-added operational views.
+document.addEventListener('click', event => {
+  const link = event.target.closest('#nav a[data-nav]');
+  if (!link) return;
+  const target = link.dataset.nav;
+  if (!access[role]?.includes(target)) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  page = target;
+  query = '';
+  if (location.hash !== `#${target}`) history.pushState(null, '', `#${target}`);
+  render();
+  document.body.classList.remove('nav-open');
+}, true);
+window.addEventListener('popstate', () => {
+  const target = location.hash.slice(1);
+  if (access[role]?.includes(target)) { page = target; query = ''; render(); }
+});
