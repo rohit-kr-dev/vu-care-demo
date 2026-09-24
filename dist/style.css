@@ -15,3 +15,4 @@
 .side-bottom p{margin:6px 0;line-height:1.4}
 .profile{padding-top:14px;margin-top:12px}
 @media(max-height:760px) and (min-width:801px){#sidebar{padding-top:16px;padding-bottom:14px}.brand{font-size:23px}.mark{width:39px;height:39px;font-size:23px;padding:6px 8px}.workspace{margin-top:12px;padding:9px}.nav-label{margin:12px 12px 7px}.side-bottom p{display:none}.profile{padding-top:10px;margin-top:8px}#sidebar nav{padding-bottom:8px}}
+.invoice-actions{display:flex;align-items:center;gap:8px}.invoice-actions button{padding:8px 11px;font-size:12px}.whatsapp-icon,.whatsapp-button{background:#1f9d55!important;color:white!important;border-color:#1f9d55!important}.whatsapp-icon{width:36px;height:36px;padding:0!important;border-radius:50%!important;font-size:18px!important;line-height:1}.whatsapp-button{border-radius:8px!important}.whatsapp-icon:hover,.whatsapp-button:hover{background:#168343!important}
