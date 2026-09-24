@@ -1,0 +1,9 @@
+{
+  "name": "vu-care-crm-demo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node preview.cjs",
+    "start": "node preview.cjs"
+  }
+}
