@@ -162,3 +162,11 @@ window.addEventListener('popstate', () => {
   const target = location.hash.slice(1);
   if (access[role]?.includes(target)) { page = target; query = ''; render(); }
 });
+
+// Ensure a shared direct link such as #invoices always opens the requested module.
+const initialModule = location.hash.slice(1);
+if (access[role]?.includes(initialModule)) {
+  page = initialModule;
+  query = '';
+  render();
+}
