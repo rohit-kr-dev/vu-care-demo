@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "node preview.cjs",
-    "start": "node preview.cjs"
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "db:prepare": "node scripts/prepare-firestore-database.mjs",
+    "db:validate": "node scripts/validate-firestore-database.mjs",
+    "db:import": "node scripts/import-firestore-seed.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.4",
+    "firebase": "^12.19.0"
   }
 }

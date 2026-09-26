@@ -1,0 +1,9 @@
+{
+  "indexes": [
+    { "collectionGroup": "records", "queryScope": "COLLECTION", "fields": [{ "fieldPath": "status", "order": "ASCENDING" }, { "fieldPath": "date", "order": "DESCENDING" }] },
+    { "collectionGroup": "records", "queryScope": "COLLECTION", "fields": [{ "fieldPath": "owner", "order": "ASCENDING" }, { "fieldPath": "nextFollowup", "order": "ASCENDING" }] },
+    { "collectionGroup": "records", "queryScope": "COLLECTION", "fields": [{ "fieldPath": "date", "order": "ASCENDING" }, { "fieldPath": "worker", "order": "ASCENDING" }] },
+    { "collectionGroup": "records", "queryScope": "COLLECTION", "fields": [{ "fieldPath": "status", "order": "ASCENDING" }, { "fieldPath": "priority", "order": "ASCENDING" }] }
+  ],
+  "fieldOverrides": []
+}

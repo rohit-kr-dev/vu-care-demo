@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Vu Care | Service workspace</title>
   <meta name="description" content="Vu Care CRM interactive demonstration with fictional data.">
+  <meta name="theme-color" content="#145449">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23145449'/%3E%3Ctext x='8' y='29' font-size='28' fill='white'%3Ev%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css?v=20260925-4">
+  <link rel="stylesheet" href="style.css?v=20260925-6">
 </head>
 <body>
   <aside id="sidebar">
@@ -14,15 +16,96 @@
     <div class="workspace">VC <div>Vu Care Services<small>Company workspace</small></div><span>⌄</span></div>
     <p class="nav-label">WORKSPACE</p>
     <nav id="nav"></nav>
-    <div class="side-bottom"><div class="demo-indicator">◈ &nbsp; Client demo</div><p>Fictional data. Changes stay in this browser. Role access is simulated.</p><button class="reset" id="reset">Reset demo data ↺</button><div class="profile"><span class="avatar">AK</span><div id="profile-name">Ananya Kumar<small>Workspace administrator</small></div></div></div>
+    <div id="nav-scroll-hint" class="nav-scroll-hint" role="button" tabindex="0" title="Click or scroll for more modules"><span>More modules ⌄</span></div>
+    <div class="side-bottom">
+      <div class="demo-meta">
+        <div class="demo-indicator">◈ &nbsp; Client demo</div>
+        <button class="reset" id="reset" title="Restore original demo data">Reset ↺</button>
+      </div>
+      <p class="demo-sub">Simulated roles · Browser storage</p>
+      <div class="profile"><span class="avatar">AK</span><div id="profile-name">Ananya Kumar<small>Workspace administrator</small></div></div>
+    </div>
   </aside>
   <div class="shell">
-    <header><div><button id="menu" aria-label="Toggle navigation">☰</button><span class="breadcrumb">Workspace <span>/</span> <b id="crumb">Overview</b></span></div><div class="header-actions"><span class="preview-badge">DEMO</span><label class="role-label">View as <select id="role" aria-label="Demo role"><option>Admin</option><option>Manager</option><option>Telecaller</option><option>Site Inspector</option><option>Field Staff</option><option>Accounts</option><option>Support</option></select></label><span class="avatar small">AK</span></div></header>
+    <header><div><button id="menu" aria-label="Toggle navigation">☰</button><span class="breadcrumb">Workspace <span>/</span> <b id="crumb">Overview</b></span></div><div class="header-actions">
+        <button id="firebase-status-pill" class="firebase-pill" title="Click to view & configure Firebase Real-time Database" data-action="firebase-config">
+          <span class="fb-dot"></span>
+          <span id="fb-status-label">Firebase: Ready</span>
+        </button>
+        <span class="preview-badge">V1.0</span>
+        <div id="auth-header-container" class="auth-chip">
+          <span class="avatar small" id="header-avatar">AK</span>
+          <div class="auth-chip-info">
+            <span class="auth-chip-name" id="auth-user-name">Ananya Kumar</span>
+            <span class="auth-chip-role" id="auth-user-role">Super Admin / Owner</span>
+          </div>
+          <button class="btn-logout" id="btn-logout" data-action="logout" title="Sign out of current account">Sign Out ⎋</button>
+        </div>
+        <select id="role" aria-label="Demo role" style="display:none"><option>Admin</option><option>Manager</option><option>Telecaller</option><option>Site Inspector</option><option>Field Staff</option><option>Accounts</option><option>Support</option></select>
+      </div></header>
     <main id="main"></main>
     <footer>VU CARE SERVICES <span>Demo workspace · September 2026</span></footer>
   </div>
   <dialog id="dialog"><div id="modal-content"></div></dialog>
   <div id="toast" role="status"></div>
-  <script src="app.js?v=20260925-4"></script>
+
+  <!-- Real User Authentication & Login Overlay -->
+  <div id="auth-overlay" class="hidden">
+    <div class="auth-box">
+      <div class="auth-head">
+        <div class="brand"><span class="mark">v<span>u</span></span><div>vu care<small>SERVICE WORKSPACE</small></div></div>
+        <h2>Staff Portal Login</h2>
+        <p>Sign in with your VU Care employee account to continue</p>
+      </div>
+      <div class="auth-body">
+        <form id="auth-login-form" class="auth-form">
+          <label>Employee Email Address
+            <input type="email" id="auth-email" required placeholder="name@vucareservices.com" autocomplete="username">
+          </label>
+          <label>Password
+            <input type="password" id="auth-password" required placeholder="••••••••" autocomplete="current-password">
+          </label>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)">
+            <label style="flex-direction:row;align-items:center;cursor:pointer">
+              <input type="checkbox" id="auth-remember" checked style="width:auto;margin:0"> Keep me signed in
+            </label>
+          </div>
+          <button type="submit" class="primary" style="padding:11px;justify-content:center;font-size:14px;margin-top:4px">
+            Sign In to Workspace →
+          </button>
+        </form>
+
+        <div class="auth-presets">
+          <div class="auth-presets-title">⚡ Quick Sign-In for Testing:</div>
+          <div class="preset-grid">
+            <button class="preset-btn" data-auth-preset="admin">
+              <strong>Admin / Owner</strong>
+              <span>Ananya Kumar · Full Access</span>
+            </button>
+            <button class="preset-btn" data-auth-preset="telecaller">
+              <strong>Telecaller</strong>
+              <span>Ananya · Leads & Call Queue</span>
+            </button>
+            <button class="preset-btn" data-auth-preset="pest-tech">
+              <strong>Pest Tech</strong>
+              <span>Ravi · Mobile Dispatch PWA</span>
+            </button>
+            <button class="preset-btn" data-auth-preset="accountant">
+              <strong>Accountant</strong>
+              <span>Sneha · Billing & Payments</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Web SDK Compat Libraries for Realtime Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+  <script src="app.js?v=20260925-9"></script>
+  <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js').catch(() => {});</script>
 </body>
 </html>

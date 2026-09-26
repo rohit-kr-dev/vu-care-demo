@@ -1,0 +1,10 @@
+{
+  "name": "VU Care Field Operations",
+  "short_name": "VU Care",
+  "description": "VU Care CRM and technician field operations workspace.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f8f6",
+  "theme_color": "#145449",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function ownProfile(userId) { return signedIn() && request.auth.uid == userId; }
+    function profile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function activeStaff() { return signedIn() && profile().data.status == 'Active'; }
+    function role() { return profile().data.role; }
+    function administrator() { return activeStaff() && role() in ['Super Admin / Owner', 'Admin / Operations Manager']; }
+
+    match /users/{userId} {
+      allow read: if ownProfile(userId) || administrator();
+      allow create, update, delete: if administrator();
+    }
+
+    // Existing demo data. Only administrators may change the shared record.
+    match /vucare_crm/state {
+      allow read: if activeStaff();
+      allow create, update, delete: if administrator();
+    }
+
+    // Target structure for granular CRM records during the next migration.
+    match /crm/{collection}/records/{recordId} {
+      allow read: if activeStaff();
+      // Granular records are an administrator-managed migration target until
+      // staff assignment and per-field update rules are connected to the UI.
+      allow create, update, delete: if administrator();
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}

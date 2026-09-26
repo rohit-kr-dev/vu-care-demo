@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() { return request.auth != null; }
+    function staffProfile() { return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)); }
+    function activeStaff() { return signedIn() && staffProfile().data.status == 'Active'; }
+    function administrator() { return activeStaff() && staffProfile().data.role in ['Super Admin / Owner', 'Admin / Operations Manager']; }
+
+    match /vucare_photos/jobs/{jobId}/{fileName} {
+      allow read: if activeStaff();
+      allow create, update: if activeStaff() && request.resource.size < 10 * 1024 * 1024 && request.resource.contentType.matches('image/.*');
+      allow delete: if administrator();
+    }
+    match /vucare_photos/inspections/{leadId}/{fileName} {
+      allow read: if activeStaff();
+      allow create, update: if activeStaff() && request.resource.size < 10 * 1024 * 1024 && request.resource.contentType.matches('image/.*');
+      allow delete: if administrator();
+    }
+    match /{allPaths=**} { allow read, write: if false; }
+  }
+}
